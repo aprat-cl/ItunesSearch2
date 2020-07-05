@@ -12,6 +12,7 @@ import android.widget.SearchView;
 
 import com.myapp.itunessearch2.adapters.ItunesSearchAdapter;
 import com.myapp.itunessearch2.domain.itunes_list;
+import com.myapp.itunessearch2.domain.local_search;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -56,12 +57,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+    private class AsyncTaskRunner extends AsyncTask<String, String, JSONArray> {
 
         private String resp;
 
         @Override
-        protected String doInBackground(String... params) {
+        protected JSONArray doInBackground(String... params) {
+            //Se inicia el proceso de búsqueda en segundo plano y se almacena su resultado
             publishProgress("Realizando Busqueda"); // Calls onProgressUpdate()
             itunes_list il = new itunes_list();
             JSONObject pars = new JSONObject();
@@ -69,23 +71,33 @@ public class MainActivity extends AppCompatActivity {
             try {
                 pars.put("song", params[0]);
                 pars.put("limit", 20);
-                resp = il.getData(pars);
-
+                resp = (JSONArray)il.getData(pars, null);
+                local_search ls = new local_search();
+                if(resp.length() == 0){
+                    String temp_result = (String)ls.getData(params[0], getApplicationContext());
+                    resp = new JSONArray(temp_result);
+                }
+                else{
+                    String temp_result = resp.toString();
+                    JSONObject jo_result = new JSONObject();
+                    jo_result.put("Search", params[0]);
+                    jo_result.put("Result", temp_result);
+                    ls.setData(jo_result, getApplicationContext());
+                }
             }
             catch(Exception ex){
                 Log.e("ErrorDownloading", ex.getMessage());
             }
 
-            return resp.toString();
+            return resp;
         }
 
 
         @Override
-        protected void onPostExecute(String result) {
-            // execution of result of Long time consuming operation
+        protected void onPostExecute(JSONArray resp) {
+            //Al terminar el proceso de busqueda se llama a el adapter para llenar los datos
             List<JSONObject> arResult = new ArrayList<>();
             try {
-                JSONArray resp = new JSONArray(result);
                 arResult = new ArrayList<>();
                 for (int i = 0; i < resp.length(); i++) {
                     arResult.add(resp.getJSONObject(i));
@@ -104,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+            //Antes de ejecutar la operacion ens egundo plano mostramos el Progress dialog en el layout
             listWait.setVisibility(LinearLayout.VISIBLE);
         }
 

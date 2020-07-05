@@ -1,5 +1,6 @@
 package com.myapp.itunessearch2.domain;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.myapp.itunessearch2.data.Responses.Itunes_SearchResponse;
@@ -18,8 +19,9 @@ import retrofit2.Response;
 
 public class itunes_list implements da_base{
     @Override
-    public JSONArray getData(JSONObject parameters) throws JSONException {
+    public Object getData(Object par, Context cxt) throws Exception {
         String url = "https://itunes.apple.com";
+        JSONObject parameters = (JSONObject)par;
         if(parameters.has("song") && parameters.has("limit")) {
             itunes_service_interface api_adapter = itunes_service_adapter.getApiInterface(url);
             try {
@@ -46,7 +48,7 @@ public class itunes_list implements da_base{
     }
 
     @Override
-    public boolean setData(JSONObject obj) {
+    public boolean setData(Object obj, Context cxt) {
         return false;
     }
 
