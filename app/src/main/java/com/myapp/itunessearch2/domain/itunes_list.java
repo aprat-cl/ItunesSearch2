@@ -3,6 +3,7 @@ package com.myapp.itunessearch2.domain;
 import android.util.Log;
 
 import com.myapp.itunessearch2.data.Responses.Itunes_SearchResponse;
+import com.myapp.itunessearch2.data.Responses.Itunes_SearchResponse_item;
 import com.myapp.itunessearch2.data.itunes_service_adapter;
 import com.myapp.itunessearch2.data.itunes_service_interface;
 
@@ -22,15 +23,15 @@ public class itunes_list implements da_base{
         if(parameters.has("song") && parameters.has("limit")) {
             itunes_service_interface api_adapter = itunes_service_adapter.getApiInterface(url);
             try {
-                Response<List<Itunes_SearchResponse>> songs = api_adapter.getSearch(parameters.getString("songs"), "music", parameters.getString("limit")).execute();
+                Response<Itunes_SearchResponse> api_result = api_adapter.getSearch(parameters.getString("song"), "music", parameters.getString("limit")).execute();
                 JSONArray resultado = new JSONArray();
-
-                for (Itunes_SearchResponse item: songs.body()) {
+                Itunes_SearchResponse songs = api_result.body();
+                for (int i = 0; i < songs.results.size(); i++) {                    ;
                     JSONObject search_item = new JSONObject();
-                    search_item.put("album", item.collectionName);
-                    search_item.put("banda", item.artistName);
-                    search_item.put("cancion", item.trackName);
-                    search_item.put("arte100", item.artworkUrl100);
+                    search_item.put("album", songs.results.get(i).collectionName);
+                    search_item.put("banda", songs.results.get(i).artistName);
+                    search_item.put("cancion", songs.results.get(i).trackName);
+                    search_item.put("arte100", songs.results.get(i).artworkUrl100);
 
                     resultado.put(search_item);
                 }
@@ -38,10 +39,10 @@ public class itunes_list implements da_base{
             }
             catch(IOException ie){
                 Log.e("Error Searching", ie.getMessage());
-                return null;
+                return new JSONArray();
             }
         }
-        return null;
+        return new JSONArray();
     }
 
     @Override

@@ -29,11 +29,35 @@
             android:queryHint="Buscar canción"
             />
     </LinearLayout>
-    <ListView
-        android:id="@+id/search_result"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </ListView>
+        <ListView
+            android:id="@+id/search_result"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
+        <LinearLayout
+            android:id="@+id/wait"
+            android:visibility="gone"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="match_parent"
+            android:background="#80808080"
+            android:layout_height="match_parent">
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="100dp"
+                android:indeterminate="true"/>
+        </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

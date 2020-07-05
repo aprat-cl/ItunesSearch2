@@ -10,8 +10,8 @@ public class itunes_service_adapter {
     private static String _BASE_URL = "";
     private static itunes_service_interface API_INTERFACE;
     public static itunes_service_interface getApiInterface(String BaseUrl){
-        if(_BASE_URL != BaseUrl && API_INTERFACE != null)
-            API_INTERFACE = null;
+        //if(_BASE_URL != BaseUrl && API_INTERFACE != null)
+        API_INTERFACE = null;
         _BASE_URL = BaseUrl;
 
         HttpLoggingInterceptor log = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC);
