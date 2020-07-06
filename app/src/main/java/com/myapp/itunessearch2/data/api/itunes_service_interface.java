@@ -1,8 +1,6 @@
-package com.myapp.itunessearch2.data;
+package com.myapp.itunessearch2.data.api;
 
-import com.myapp.itunessearch2.data.Responses.Itunes_SearchResponse;
-
-import java.util.List;
+import com.myapp.itunessearch2.data.api.Responses.Itunes_SearchResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -30,6 +30,13 @@ public class DatabaseMan extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + _SAVE_TABLE );
     }
+
+    /**
+     * Obtiene desde la base de datos la busqueda historica segun su llave
+     * @param Query String llave de busqueda historica
+     * @return String con la busqueda historica o vacia si no existe
+     * @throws Exception
+     */
     public String getHistoricSearch(String Query) throws Exception
     {
         List<String> result = new ArrayList<>();
@@ -43,6 +50,13 @@ public class DatabaseMan extends SQLiteOpenHelper {
 
         return "";
     }
+
+    /**
+     * Metodo que establece la busqueda historica por su llave
+     * @param Search String con la llave de busqueda para la tabla
+     * @param Result String con el resultado de la busqueda para almacenar
+     * @throws Exception
+     */
     public void setHistoricSearch(String Search, String Result) throws Exception {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT OR REPLACE INTO " + _SAVE_TABLE + " VALUES ('" + Search + "', '" + Result + "')");

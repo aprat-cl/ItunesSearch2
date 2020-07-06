@@ -3,21 +3,25 @@ package com.myapp.itunessearch2.domain;
 import android.content.Context;
 import android.util.Log;
 
-import com.myapp.itunessearch2.data.Responses.Itunes_SearchResponse;
-import com.myapp.itunessearch2.data.Responses.Itunes_SearchResponse_item;
-import com.myapp.itunessearch2.data.itunes_service_adapter;
-import com.myapp.itunessearch2.data.itunes_service_interface;
+import com.myapp.itunessearch2.data.api.Responses.Itunes_SearchResponse;
+import com.myapp.itunessearch2.data.api.itunes_service_adapter;
+import com.myapp.itunessearch2.data.api.itunes_service_interface;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
 
 import retrofit2.Response;
 
 public class itunes_list implements da_base{
+    /**
+     * Metodo que utiliza la api de itunes para la busqueda de canciones
+     * @param par Parametro de tipo JSONObject con la cancion a buscar y el limite de busqueda.
+     * @param cxt Contexto, en este caso no se usa, debe ser null
+     * @return Objeto de tipo JSONArray con el resultado de la busqueda usando la api
+     * @throws Exception
+     */
     @Override
     public Object getData(Object par, Context cxt) throws Exception {
         String url = "https://itunes.apple.com";
@@ -47,6 +51,12 @@ public class itunes_list implements da_base{
         return new JSONArray();
     }
 
+    /**
+     * **Metodo no utilizado**
+     * @param obj
+     * @param cxt
+     * @return
+     */
     @Override
     public boolean setData(Object obj, Context cxt) {
         return false;

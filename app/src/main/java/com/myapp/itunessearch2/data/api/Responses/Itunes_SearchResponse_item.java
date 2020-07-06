@@ -1,4 +1,4 @@
-package com.myapp.itunessearch2.data.Responses;
+package com.myapp.itunessearch2.data.api.Responses;
 
 public class Itunes_SearchResponse_item {
     public String

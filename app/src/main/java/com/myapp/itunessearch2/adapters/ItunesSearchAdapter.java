@@ -43,6 +43,7 @@ public class ItunesSearchAdapter extends ArrayAdapter<JSONObject> {
             TextView tv_album = convertView.findViewById(R.id.item_album);
             ImageView iv_arte = convertView.findViewById(R.id.item_arte);
 
+            //Descarga del arte de la cancion
             DownloadImageTask dit = new DownloadImageTask(iv_arte);
             dit.execute(data.getString("arte100"));
 

@@ -1,4 +1,4 @@
-package com.myapp.itunessearch2.data;
+package com.myapp.itunessearch2.data.api;
 
 import okhttp3.OkHttpClient;
 

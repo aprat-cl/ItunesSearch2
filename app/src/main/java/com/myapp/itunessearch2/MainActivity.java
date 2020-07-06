@@ -71,13 +71,16 @@ public class MainActivity extends AppCompatActivity {
             try {
                 pars.put("song", params[0]);
                 pars.put("limit", 20);
+                //Aca se obtiene la informacion desde el intermediario de la api
                 resp = (JSONArray)il.getData(pars, null);
                 local_search ls = new local_search();
                 if(resp.length() == 0){
+                    //Si la respuesta es vacía busco en la bd local si existe una busqueda igual.
                     String temp_result = (String)ls.getData(params[0], getApplicationContext());
                     resp = new JSONArray(temp_result);
                 }
                 else{
+                    //Guardo la busqueda actual o reemplazo si existe
                     String temp_result = resp.toString();
                     JSONObject jo_result = new JSONObject();
                     jo_result.put("Search", params[0]);
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             catch(Exception ex){
                 Log.e("ErrorParsing", ex.getMessage());
             }
+            //se llena el adapter para mostrar la lista
             ItunesSearchAdapter adapter = new ItunesSearchAdapter(MainActivity.this, arResult);
 
             ListView listView = findViewById(R.id.search_result);
